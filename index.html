@@ -1,1 +1,1941 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DarkTube AI — Painel de Controle</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a2e;
+            --bg-card-hover: #1f1f35;
+            --accent: #7c3aed;
+            --accent-light: #a78bfa;
+            --accent-glow: rgba(124, 58, 237, 0.3);
+            --green: #10b981;
+            --green-glow: rgba(16, 185, 129, 0.3);
+            --yellow: #f59e0b;
+            --yellow-glow: rgba(245, 158, 11, 0.3);
+            --red: #ef4444;
+            --red-glow: rgba(239, 68, 68, 0.3);
+            --blue: #3b82f6;
+            --blue-glow: rgba(59, 130, 246, 0.3);
+            --cyan: #06b6d4;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border: #2a2a3e;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Background animated gradient */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 50%, rgba(124, 58, 237, 0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.03) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.03) 0%, transparent 50%);
+            animation: bgFloat 20s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes bgFloat {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-2%, -2%); }
+        }
+
+        /* Layout */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+            padding: 24px 16px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 8px;
+            margin-bottom: 32px;
+        }
+
+        .sidebar-logo .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent), var(--blue));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .sidebar-logo h1 {
+            font-size: 18px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-light), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sidebar-logo span {
+            font-size: 11px;
+            color: var(--text-muted);
+            display: block;
+            font-weight: 400;
+        }
+
+        .nav-section {
+            margin-bottom: 24px;
+        }
+
+        .nav-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            padding: 0 12px;
+            margin-bottom: 8px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .nav-item:hover {
+            background: var(--glass);
+            color: var(--text-primary);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(59, 130, 246, 0.1));
+            color: var(--accent-light);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+
+        .nav-item .icon {
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+        }
+
+        .nav-item .badge {
+            margin-left: auto;
+            background: var(--accent);
+            color: white;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 260px;
+            flex: 1;
+            padding: 24px 32px;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .header-left h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .header-left p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), #6d28d9);
+            color: white;
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            background: var(--glass);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-card);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--green), #059669);
+            color: white;
+            box-shadow: 0 4px 15px var(--green-glow);
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+            border-radius: 8px;
+        }
+
+        /* Cards Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--blue));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-card .stat-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .stat-card .stat-value {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .stat-card .stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .stat-card .stat-change {
+            font-size: 12px;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .stat-change.positive { color: var(--green); }
+        .stat-change.negative { color: var(--red); }
+
+        /* Sections */
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Pipeline / Cronograma */
+        .pipeline-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .pipeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .pipeline-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .pipeline-steps {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 16px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+        }
+
+        .pipeline-step {
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            position: relative;
+        }
+
+        .step-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            margin: 0 auto 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .step-circle.completed {
+            background: var(--green);
+            color: white;
+            box-shadow: 0 0 15px var(--green-glow);
+        }
+
+        .step-circle.in-progress {
+            background: var(--yellow);
+            color: #1a1a2e;
+            box-shadow: 0 0 15px var(--yellow-glow);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .step-circle.pending {
+            background: var(--bg-secondary);
+            color: var(--text-muted);
+            border: 2px solid var(--border);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .step-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .step-connector {
+            flex: 0.5;
+            display: flex;
+            align-items: center;
+            padding-top: 8px;
+        }
+
+        .step-connector .line {
+            width: 100%;
+            height: 2px;
+            background: var(--border);
+        }
+
+        .step-connector .line.completed {
+            background: var(--green);
+        }
+
+        /* Video Cards */
+        .video-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .video-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .video-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--accent);
+        }
+
+        .video-card .video-number {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--accent), var(--blue));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .video-card .video-info {
+            flex: 1;
+        }
+
+        .video-card .video-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .video-card .video-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .video-card .video-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .status-published { background: rgba(16, 185, 129, 0.15); color: var(--green); }
+        .status-producing { background: rgba(245, 158, 11, 0.15); color: var(--yellow); }
+        .status-pending { background: rgba(100, 116, 139, 0.15); color: var(--text-muted); }
+        .status-scheduled { background: rgba(59, 130, 246, 0.15); color: var(--blue); }
+
+        /* Trending Topics */
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+        }
+
+        .topic-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .topic-card .topic-niche {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--accent-light);
+            margin-bottom: 8px;
+        }
+
+        .topic-card .topic-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .topic-card .topic-stats {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .topic-card .topic-stat {
+            font-size: 12px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .topic-card .topic-heat {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .heat-bar {
+            width: 60px;
+            height: 6px;
+            background: var(--bg-secondary);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .heat-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .heat-high { background: linear-gradient(90deg, var(--red), var(--yellow)); }
+        .heat-medium { background: linear-gradient(90deg, var(--yellow), var(--green)); }
+        .heat-low { background: linear-gradient(90deg, var(--green), var(--cyan)); }
+
+        .topic-card .topic-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        /* Channels Section */
+        .channels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .channel-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .channel-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        .channel-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            background: linear-gradient(135deg, var(--accent), var(--blue));
+        }
+
+        .channel-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .channel-card .channel-niche {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .channel-stats-row {
+            display: flex;
+            justify-content: space-around;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .channel-stat-item {
+            text-align: center;
+        }
+
+        .channel-stat-item .value {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .channel-stat-item .label {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* Saldo Section */
+        .balance-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .balance-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .balance-card h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .balance-amount {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .balance-detail {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 12px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-fill.purple { background: linear-gradient(90deg, var(--accent), var(--accent-light)); }
+        .progress-fill.orange { background: linear-gradient(90deg, #f97316, var(--yellow)); }
+
+        /* Usage Table */
+        .usage-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        .usage-table th, .usage-table td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px;
+        }
+
+        .usage-table th {
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .usage-table td {
+            color: var(--text-secondary);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        /* Notification Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--green);
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 2000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast .toast-icon {
+            font-size: 20px;
+        }
+
+        .toast .toast-message {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 16px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .balance-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 16px;
+                align-items: flex-start;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .fade-in-delay-1 { animation-delay: 0.1s; opacity: 0; }
+        .fade-in-delay-2 { animation-delay: 0.2s; opacity: 0; }
+        .fade-in-delay-3 { animation-delay: 0.3s; opacity: 0; }
+        .fade-in-delay-4 { animation-delay: 0.4s; opacity: 0; }
+
+        /* Cronograma Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 32px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 12px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 24px;
+            padding: 16px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 20px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            background: var(--bg-primary);
+        }
+
+        .timeline-item.done::before {
+            background: var(--green);
+            border-color: var(--green);
+        }
+
+        .timeline-item.current::before {
+            background: var(--yellow);
+            border-color: var(--yellow);
+            box-shadow: 0 0 10px var(--yellow-glow);
+        }
+
+        .timeline-item h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .timeline-item p {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .timeline-item .timeline-date {
+            font-size: 11px;
+            color: var(--accent-light);
+            margin-top: 6px;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+
+        .empty-state .empty-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .empty-state h3 {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        /* Make webhook status */
+        .webhook-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 10px;
+            font-size: 12px;
+            color: var(--green);
+        }
+
+        .webhook-status .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: blink 2s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-icon">🎬</div>
+                <div>
+                    <h1>DarkTube AI</h1>
+                    <span>Painel de Controle</span>
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Principal</div>
+                <div class="nav-item active" onclick="showSection('dashboard')">
+                    <span class="icon">📊</span> Dashboard
+                </div>
+                <div class="nav-item" onclick="showSection('cronograma')">
+                    <span class="icon">📅</span> Cronograma
+                    <span class="badge">3</span>
+                </div>
+                <div class="nav-item" onclick="showSection('pipeline')">
+                    <span class="icon">🔄</span> Pipeline
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Conteúdo</div>
+                <div class="nav-item" onclick="showSection('trending')">
+                    <span class="icon">🔥</span> Temas em Alta
+                </div>
+                <div class="nav-item" onclick="showSection('videos')">
+                    <span class="icon">🎥</span> Meus Vídeos
+                </div>
+                <div class="nav-item" onclick="showSection('channels')">
+                    <span class="icon">📺</span> Canais
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Sistema</div>
+                <div class="nav-item" onclick="showSection('saldo')">
+                    <span class="icon">💰</span> Saldo APIs
+                </div>
+                <div class="nav-item" onclick="showSection('automacao')">
+                    <span class="icon">⚡</span> Automação
+                </div>
+                <div class="nav-item" onclick="showSection('config')">
+                    <span class="icon">⚙️</span> Configurações
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- DASHBOARD -->
+            <div class="section active" id="section-dashboard">
+                <div class="header">
+                    <div class="header-left">
+                        <h2>Dashboard</h2>
+                        <p>Bem-vindo de volta! Aqui está o resumo dos seus canais.</p>
+                    </div>
+                    <div class="header-right">
+                        <div class="webhook-status">
+                            <span class="dot"></span>
+                            Make.com Conectado
+                        </div>
+                        <button class="btn btn-primary" onclick="openModal('newVideo')">
+                            ➕ Novo Vídeo
+                        </button>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card fade-in">
+                        <div class="stat-icon" style="background: rgba(124, 58, 237, 0.15);">🎥</div>
+                        <div class="stat-value" id="totalVideos">12</div>
+                        <div class="stat-label">Vídeos Produzidos</div>
+                        <div class="stat-change positive">↑ +3 esta semana</div>
+                    </div>
+                    <div class="stat-card fade-in fade-in-delay-1">
+                        <div class="stat-icon" style="background: rgba(16, 185, 129, 0.15);">✅</div>
+                        <div class="stat-value" id="publishedVideos">8</div>
+                        <div class="stat-label">Publicados</div>
+                        <div class="stat-change positive">↑ +2 esta semana</div>
+                    </div>
+                    <div class="stat-card fade-in fade-in-delay-2">
+                        <div class="stat-icon" style="background: rgba(245, 158, 11, 0.15);">⏳</div>
+                        <div class="stat-value" id="pendingVideos">4</div>
+                        <div class="stat-label">Em Produção</div>
+                        <div class="stat-change negative">↓ 1 atrasado</div>
+                    </div>
+                    <div class="stat-card fade-in fade-in-delay-3">
+                        <div class="stat-icon" style="background: rgba(59, 130, 246, 0.15);">💰</div>
+                        <div class="stat-value">$18.00</div>
+                        <div class="stat-label">Saldo Total APIs</div>
+                        <div class="stat-change positive">~277 vídeos restantes</div>
+                    </div>
+                </div>
+
+                <!-- Próximos Passos -->
+                <div class="pipeline-container">
+                    <div class="pipeline-header">
+                        <h3>🎯 Próximos Passos</h3>
+                        <button class="btn btn-secondary btn-small" onclick="showSection('cronograma')">Ver Cronograma Completo</button>
+                    </div>
+                    <div class="timeline" id="nextSteps">
+                        <div class="timeline-item current">
+                            <h4>🎙️ Gerar narração — "Os 5 Mistérios do Espaço"</h4>
+                            <p>Aguardando processamento no ElevenLabs via Make.com</p>
+                            <div class="timeline-date">📍 Passo atual • Hoje</div>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>🎨 Gerar imagens — "Segredos do Oceano"</h4>
+                            <p>10 imagens via Replicate (FLUX Schnell)</p>
+                            <div class="timeline-date">⏳ Próximo passo • Hoje</div>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>📝 Criar roteiro — "Curiosidades da História"</h4>
+                            <p>Gerar roteiro via OpenRouter (Llama free)</p>
+                            <div class="timeline-date">📋 Agendado • Amanhã 08:00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Últimos Vídeos -->
+                <div class="pipeline-container">
+                    <div class="pipeline-header">
+                        <h3>🎬 Últimos Vídeos</h3>
+                        <button class="btn btn-secondary btn-small" onclick="showSection('videos')">Ver Todos</button>
+                    </div>
+                    <div class="video-list" id="recentVideos">
+                        <div class="video-card">
+                            <div class="video-number">12</div>
+                            <div class="video-info">
+                                <div class="video-title">Os 5 Mistérios do Espaço que a NASA Não Explica</div>
+                                <div class="video-meta">Canal: Cosmos Dark • Em produção</div>
+                            </div>
+                            <span class="video-status status-producing">🔄 Produzindo</span>
+                        </div>
+                        <div class="video-card">
+                            <div class="video-number">11</div>
+                            <div class="video-info">
+                                <div class="video-title">Segredos do Oceano que Você Nunca Imaginou</div>
+                                <div class="video-meta">Canal: Cosmos Dark • Publicado há 2 dias</div>
+                            </div>
+                            <span class="video-status status-published">✅ Publicado</span>
+                        </div>
+                        <div class="video-card">
+                            <div class="video-number">10</div>
+                            <div class="video-info">
+                                <div class="video-title">10 Fatos Assustadores sobre a Mente Humana</div>
+                                <div class="video-meta">Canal: Mente Obscura • Publicado há 4 dias</div>
+                            </div>
+                            <span class="video-status status-published">✅ Publicado</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CRONOGRAMA -->
+            <div class="section" id="section-cronograma">
+                <div class="header">
+                    <div class="header-left">
+                        <h2>📅 Cronograma Dinâmico</h2>
+                        <p>Acompanhe cada etapa da produção dos seus vídeos</p>
+                    </div>
+                    <div class="header-right">
+                        <select class="btn btn-secondary" id="cronogramaFilter" onchange="filterCronograma()">
+                            <option value="all">Todos os Vídeos</option>
+                            <option value="producing">Em Produção</option>
+                            <option value="scheduled">Agendados</option>
+                            <option value="published">Publicados</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="cronogramaList">
+                    <!-- Video 1 - Em Produção -->
+                    <div class="pipeline-container fade-in" data-status="producing">
+                        <div class="pipeline-header">
+                            <h3>#13 — Os 5 Mistérios do Espaço que a NASA Não Explica</h3>
+                            <span class="video-status status-producing">🔄 Em Produção</span>
+                        </div>
+                        <div class="pipeline-steps">
+                            <div class="pipeline-step">
+                                <div class="step-circle completed">✓</div>
+                                <div class="step-label">Roteiro</div>
+                            </div>
+                            <div class="step-connector"><div class="line completed"></div></div>
+                            <div class="pipeline-step">
+                                <div class="step-circle completed">✓</div>
+                                <div class="step-label">Narração</div>
+                            </div>
+                            <div class="step-connector"><div class="line completed"></div></div>
+                            <div class="pipeline-step">
+                                <div class="step-circle in-progress">3</div>
+                                <div class="step-label">Imagens</div>
+                            </div>
+                            <div class="step-connector"><div class="line"></div></div>
+                            <div class="pipeline-step">
+                                <div class="step-circle pending">4</div>
+                                <div class="step-label">Edição</div>
+                            </div>
+                            <div class="step-connector"><div class="line"></div></div>
+                            <div class="pipeline-step">
+                                <div class="step-circle pending">5</div>
+                                <div class="step-label">Thumbnail</div>
+                            </div>
+                            <div class="step-connector"><div class="line"></div></div>
+                            <div class="pipeline-step">
+                                <div class="step-circle pending">6</div>
+                                <div class="step-label">Publicação</div>
+                            </div>
+                        </div>
+                        <p style="font-size: 13px; color: var(--text-muted);">📍 Atual: Gerando 10 imagens via Replicate (FLUX Schnell) • Custo estimado: $0.03</p>
+                    </div>
+
+                    <!-- Video 2 - Agendado -->
+                    <div class="pipeline-container fade-in fade-in-delay-1" data-status="scheduled">
+                        <div class="pipeline-header">
+                            <h3>#14 — Segredos Obscuros da Antiga Roma</h3>
+                            <span class="video-status status-scheduled">📅 Agendado para 25/07</span>
+                        </div>
+                        <div class="pipeline-steps">
+                            <div class="pipeline-step">
+                                <div class="step-circle completed">✓</div>
+                                <div class="step-label">Roteiro</div>
+                            </div>
+                            <div class="step-connector"><div class="line completed"></div></div>
+                            <div class="pipeline-step">
+                                <div class="step-circle in-progress">2</div>
+                                <div class="step-label">Narração</div>
+                            </div>
+                            <div class="step-connector"><div class="line"></div></div>
+                            <div class="pipeline-step">
+                                <div class="step-circle pending">3</div>
+                                <div class="step-label">Imagens</div>
+                            </div>
+                            <div class="step-connector"><div class="line"></div></div>
+                            <div class="pipeline-step">
+                                <div class="step-circle pending">4</div>
+                                <div class="step-label">Edição</div>
+                            </div>
+                            <div class="step-connector"><div class="line"></div></div>
+                            <div class="pipeline-step">
+                                <div class="step-circle pending">5</div>
+                                <div class="step-label">Thumbnail</div>
+                            </div>
+                            <div class="step-connector"><div class="line"></div></div>
+                            <div class="pipeline-step">
+                                <div class="step-circle pending">6</div>
+                                <div class="step-label">Publicação</div>
+                            </div>
+                        </div>
+                        <p style="font-size: 13px; color: var(--text-muted);">📍 Atual: Aguardando narração ElevenLabs • Publicação: 25/07 às 18:00</p>
+                    </div>
+
+                    <!-- Video 3 - Pendente -->
+                    <div class="pipeline-container fade-in fade-in-delay-2" data-status="pending">
+                        <div class="pipeline-header">
+                            <h3>#15 — Criaturas das Profundezas do Oceano</h3>
+                            <span class="video-status status-pending">⏳ Aguardando Início</span>
+                        </div>
+                        <div class="pipeline-steps">
+                            <div class="pipeline-step">
+                                <div class="step-circle in-progress">1</div>
+                                <div class="step-label">Roteiro</div>
+                            </div>
+                            <div class="step-connector"><div class="line"></div></div>
+                            <div class="pipeline-step">
+                                <div class="step-circle pending">2</div>
+                                <div class="step-label">Narração</div>
+                            </div>
+                            <div class="step-connector"><div class="line"></div></div>
+                            <div class="pipeline-step">
+                                <div class="step-circle pending">3</div>
+                                <div class="step-label">Imagens</div>
+                            </div>
+                            <div class="step-connector"><div class="line"></div></div>
+                            <div class="pipeline-step">
+                                <div class="step-circle pending">4</div>
+                                <div class="step-label">Edição</div>
+                            </div>
+                            <div class="step-connector"><div class="line"></div></div>
+                            <div class="pipeline-step">
+                                <div class="step-circle pending">5</div>
+                                <div class="step-label">Thumbnail</div>
+                            </div>
+                            <div class="step-connector"><div class="line"></div></div>
+                            <div class="pipeline-step">
+                                <div class="step-circle pending">6</div>
+                                <div class="step-label">Publicação</div>
+                            </div>
+                        </div>
+                        <p style="font-size: 13px; color: var(--text-muted);">📍 Atual: Gerando roteiro via OpenRouter (Llama free) • Início automático: 24/07 às 06:00</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PIPELINE -->
+            <div class="section" id="section-pipeline">
+                <div class="header">
+                    <div class="header-left">
+                        <h2>🔄 Pipeline de Produção</h2>
+                        <p>Fluxo completo de automação Make.com</p>
+                    </div>
+                </div>
+
+                <div class="pipeline-container">
+                    <h3 style="margin-bottom: 20px;">⚡ Fluxo Ativo — Make.com</h3>
+                    <div class="pipeline-steps" style="flex-wrap: wrap; gap: 12px;">
+                        <div style="flex: 1; min-width: 150px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 16px; text-align: center;">
+                            <div style="font-size: 24px; margin-bottom: 8px;">⏰</div>
+                            <div style="font-size: 13px; font-weight: 600;">Gatilho</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Schedule Diário<br>06:00 AM</div>
+                        </div>
+                        <div style="flex: 1; min-width: 150px; background: rgba(124, 58, 237, 0.1); border: 1px solid rgba(124, 58, 237, 0.3); border-radius: 12px; padding: 16px; text-align: center;">
+                            <div style="font-size: 24px; margin-bottom: 8px;">🧠</div>
+                            <div style="font-size: 13px; font-weight: 600;">OpenRouter</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Roteiro + Título<br>Llama Free</div>
+                        </div>
+                        <div style="flex: 1; min-width: 150px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 12px; padding: 16px; text-align: center;">
+                            <div style="font-size: 24px; margin-bottom: 8px;">🎙️</div>
+                            <div style="font-size: 13px; font-weight: 600;">ElevenLabs</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Narração PT-BR<br>Multilingual v2</div>
+                        </div>
+                        <div style="flex: 1; min-width: 150px; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 16px; text-align: center;">
+                            <div style="font-size: 24px; margin-bottom: 8px;">🎨</div>
+                            <div style="font-size: 13px; font-weight: 600;">Replicate</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">10 Imagens<br>FLUX Schnell</div>
+                        </div>
+                        <div style="flex: 1; min-width: 150px; background: rgba(6, 182, 212, 0.1); border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 12px; padding: 16px; text-align: center;">
+                            <div style="font-size: 24px; margin-bottom: 8px;">🎬</div>
+                            <div style="font-size: 13px; font-weight: 600;">Creatomate</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Edição Auto<br>Template Dark</div>
+                        </div>
+                        <div style="flex: 1; min-width: 150px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; padding: 16px; text-align: center;">
+                            <div style="font-size: 24px; margin-bottom: 8px;">📺</div>
+                            <div style="font-size: 13px; font-weight: 600;">YouTube API</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Upload + SEO<br>Publicação Auto</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pipeline-container" style="margin-top: 20px;">
+                    <h3 style="margin-bottom: 16px;">📊 Estatísticas do Pipeline (Últimos 7 dias)</h3>
+                    <div class="stats-grid" style="margin-bottom: 0;">
+                        <div style="text-align: center; padding: 12px;">
+                            <div style="font-size: 24px; font-weight: 800; color: var(--green);">7</div>
+                            <div style="font-size: 12px; color: var(--text-muted);">Vídeos Processados</div>
+                        </div>
+                        <div style="text-align: center; padding: 12px;">
+                            <div style="font-size: 24px; font-weight: 800; color: var(--accent-light);">6/7</div>
+                            <div style="font-size: 12px; color: var(--text-muted);">Taxa de Sucesso</div>
+                        </div>
+                        <div style="text-align: center; padding: 12px;">
+                            <div style="font-size: 24px; font-weight: 800; color: var(--cyan);">~4min</div>
+                            <div style="font-size: 12px; color: var(--text-muted);">Tempo Médio/Vídeo</div>
+                        </div>
+                        <div style="text-align: center; padding: 12px;">
+                            <div style="font-size: 24px; font-weight: 800; color: var(--yellow);">$0.25</div>
+                            <div style="font-size: 12px; color: var(--text-muted);">Custo Total Semana</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TRENDING TOPICS -->
+            <div class="section" id="section-trending">
+                <div class="header">
+                    <div class="header-left">
+                        <h2>🔥 Temas em Alta</h2>
+                        <p>Tópicos trending baseados nos seus canais</p>
+                    </div>
+                    <div class="header-right">
+                        <select class="btn btn-secondary" id="trendingChannel" onchange="generateTrending()">
+                            <option value="all">Todos os Canais</option>
+                            <option value="cosmos">🌌 Cosmos Dark</option>
+                            <option value="mente">🧠 Mente Obscura</option>
+                            <option value="historia">📜 História Oculta</option>
+                            <option value="tech">💻 Tech Futuro</option>
+                        </select>
+                        <button class="btn btn-primary" onclick="generateTrending()">
+                            🔄 Atualizar Temas
+                        </button>
+                    </div>
+                </div>
+
+                <div class="topics-grid" id="trendingTopics">
+                    <!-- Topics will be generated dynamically -->
+                </div>
+            </div>
+
+            <!-- VIDEOS -->
+            <div class="section" id="section-videos">
+                <div class="header">
+                    <div class="header-left">
+                        <h2>🎥 Meus Vídeos</h2>
+                        <p>Todos os vídeos produzidos e em produção</p>
+                    </div>
+                    <div class="header-right">
+                        <button class="btn btn-primary" onclick="openModal('newVideo')">
+                            ➕ Novo Vídeo
+                        </button>
+                    </div>
+                </div>
+
+                <div class="video-list" id="allVideos">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+
+            <!-- CHANNELS -->
+            <div class="section" id="section-channels">
+                <div class="header">
+                    <div class="header-left">
+                        <h2>📺 Meus Canais</h2>
+                        <p>Gerencie seus canais dark</p>
+                    </div>
+                    <div class="header-right">
+                        <button class="btn btn-primary" onclick="openModal('newChannel')">
+                            ➕ Novo Canal
+                        </button>
+                    </div>
+                </div>
+
+                <div class="channels-grid" id="channelsList">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+
+            <!-- SALDO -->
+            <div class="section" id="section-saldo">
+                <div class="header">
+                    <div class="header-left">
+                        <h2>💰 Saldo das APIs</h2>
+                        <p>Controle de uso e gastos das suas APIs</p>
+                    </div>
+                </div>
+
+                <div class="balance-grid">
+                    <div class="balance-card">
+                        <h4>🧠 OpenRouter</h4>
+                        <div class="balance-amount" style="color: var(--accent-light);">$8.00</div>
+                        <div class="balance-detail">Usado: $0.12 de $8.00</div>
+                        <div class="balance-detail">~2.666 roteiros restantes</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill purple" style="width: 1.5%;"></div>
+                        </div>
+                        <table class="usage-table" style="margin-top: 16px;">
+                            <tr><th>Modelo</th><th>Uso</th><th>Custo</th></tr>
+                            <tr><td>Llama 3.3 (Free)</td><td>42 calls</td><td>$0.00</td></tr>
+                            <tr><td>DeepSeek V3</td><td>12 calls</td><td>$0.04</td></tr>
+                            <tr><td>Gemma 2 (Free)</td><td>28 calls</td><td>$0.00</td></tr>
+                        </table>
+                    </div>
+
+                    <div class="balance-card">
+                        <h4>🎨 Replicate</h4>
+                        <div class="balance-amount" style="color: #f97316;">$10.00</div>
+                        <div class="balance-detail">Usado: $0.87 de $10.00</div>
+                        <div class="balance-detail">~277 vídeos restantes (10 imgs cada)</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill orange" style="width: 8.7%;"></div>
+                        </div>
+                        <table class="usage-table" style="margin-top: 16px;">
+                            <tr><th>Modelo</th><th>Imagens</th><th>Custo</th></tr>
+                            <tr><td>FLUX Schnell</td><td>230 imgs</td><td>$0.69</td></tr>
+                            <tr><td>FLUX Dev</td><td>7 imgs</td><td>$0.18</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="pipeline-container">
+                    <h3 style="margin-bottom: 16px;">📈 Projeção de Uso</h3>
+                    <table class="usage-table">
+                        <tr><th>Cenário</th><th>OpenRouter</th><th>Replicate</th><th>Duração</th></tr>
+                        <tr><td>1 vídeo/dia (otimizado)</td><td>$0.003/dia</td><td>$0.036/dia</td><td style="color: var(--green); font-weight: 600;">~9 meses</td></tr>
+                        <tr><td>2 vídeos/dia</td><td>$0.006/dia</td><td>$0.072/dia</td><td style="color: var(--yellow); font-weight: 600;">~4.5 meses</td></tr>
+                        <tr><td>3 vídeos/dia</td><td>$0.009/dia</td><td>$0.108/dia</td><td style="color: var(--red); font-weight: 600;">~3 meses</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- AUTOMAÇÃO -->
+            <div class="section" id="section-automacao">
+                <div class="header">
+                    <div class="header-left">
+                        <h2>⚡ Automação Make.com</h2>
+                        <p>Status dos seus cenários e webhooks</p>
+                    </div>
+                </div>
+
+                <div class="pipeline-container">
+                    <h3 style="margin-bottom: 16px;">🔗 Cenários Ativos</h3>
+                    <div class="video-list">
+                        <div class="video-card">
+                            <div class="video-number" style="background: var(--green);">✓</div>
+                            <div class="video-info">
+                                <div class="video-title">Cenário 1: Geração de Roteiros</div>
+                                <div class="video-meta">OpenRouter (Llama Free) → Google Sheets • Último: há 2 horas</div>
+                            </div>
+                            <span class="video-status status-published">Ativo</span>
+                        </div>
+                        <div class="video-card">
+                            <div class="video-number" style="background: var(--green);">✓</div>
+                            <div class="video-info">
+                                <div class="video-title">Cenário 2: Narração Automática</div>
+                                <div class="video-meta">ElevenLabs API → Google Drive • Último: há 3 horas</div>
+                            </div>
+                            <span class="video-status status-published">Ativo</span>
+                        </div>
+                        <div class="video-card">
+                            <div class="video-number" style="background: var(--green);">✓</div>
+                            <div class="video-info">
+                                <div class="video-title">Cenário 3: Geração de Imagens</div>
+                                <div class="video-meta">Replicate (FLUX) → Google Drive • Último: há 1 hora</div>
+                            </div>
+                            <span class="video-status status-published">Ativo</span>
+                        </div>
+                        <div class="video-card">
+                            <div class="video-number" style="background: var(--yellow);">⏸</div>
+                            <div class="video-info">
+                                <div class="video-title">Cenário 4: Upload YouTube</div>
+                                <div class="video-meta">YouTube API → Publicação automática • Pausado</div>
+                            </div>
+                            <span class="video-status status-producing">Pausado</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONFIGURAÇÕES -->
+            <div class="section" id="section-config">
+                <div class="header">
+                    <div class="header-left">
+                        <h2>⚙️ Configurações</h2>
+                        <p>Configure suas APIs e preferências</p>
+                    </div>
+                </div>
+
+                <div class="pipeline-container">
+                    <h3 style="margin-bottom: 20px;">🔑 Chaves de API</h3>
+                    <div class="form-group">
+                        <label>OpenRouter API Key</label>
+                        <input type="password" value="sk-or-v1-xxxxxxxxxxxx" placeholder="sk-or-v1-...">
+                    </div>
+                    <div class="form-group">
+                        <label>Replicate API Token</label>
+                        <input type="password" value="r8_xxxxxxxxxxxx" placeholder="r8_...">
+                    </div>
+                    <div class="form-group">
+                        <label>ElevenLabs API Key</label>
+                        <input type="password" value="xxxxxxxxxxxx" placeholder="Sua chave ElevenLabs">
+                    </div>
+                    <div class="form-group">
+                        <label>Make.com Webhook URL</label>
+                        <input type="text" value="https://hook.us1.make.com/xxxxx" placeholder="URL do webhook">
+                    </div>
+                    <div class="form-group">
+                        <label>YouTube API Key</label>
+                        <input type="password" placeholder="Sua chave YouTube Data API v3">
+                    </div>
+                    <button class="btn btn-primary" onclick="showToast('Configurações salvas com sucesso! ✅')">
+                        💾 Salvar Configurações
+                    </button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Modal: Novo Vídeo -->
+    <div class="modal-overlay" id="modal-newVideo">
+        <div class="modal">
+            <h3>➕ Criar Novo Vídeo</h3>
+            <div class="form-group">
+                <label>Canal</label>
+                <select>
+                    <option>🌌 Cosmos Dark</option>
+                    <option>🧠 Mente Obscura</option>
+                    <option>📜 História Oculta</option>
+                    <option>💻 Tech Futuro</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Tema do Vídeo</label>
+                <input type="text" placeholder="Ex: Os segredos das pirâmides do Egito">
+            </div>
+            <div class="form-group">
+                <label>Estilo de Narração</label>
+                <select>
+                    <option>Misterioso e Dramático</option>
+                    <option>Educativo e Calmo</option>
+                    <option>Energético e Empolgante</option>
+                    <option>Narrativa Cinematográfica</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Modelo de Imagens</label>
+                <select>
+                    <option>FLUX Schnell ($0.003/img) — Rápido</option>
+                    <option>FLUX Dev ($0.025/img) — Qualidade</option>
+                    <option>Stable Diffusion 3.5 ($0.02/img) — Equilibrado</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Número de Imagens</label>
+                <select>
+                    <option>8 imagens (vídeo ~5 min)</option>
+                    <option>10 imagens (vídeo ~8 min)</option>
+                    <option>15 imagens (vídeo ~12 min)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Data de Publicação</label>
+                <input type="datetime-local">
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="btn btn-primary" onclick="createVideo()">🚀 Iniciar Produção</button>
+                <button class="btn btn-secondary" onclick="closeModal('newVideo')">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Novo Canal -->
+    <div class="modal-overlay" id="modal-newChannel">
+        <div class="modal">
+            <h3>➕ Criar Novo Canal</h3>
+            <div class="form-group">
+                <label>Nome do Canal</label>
+                <input type="text" placeholder="Ex: Mistérios do Universo">
+            </div>
+            <div class="form-group">
+                <label>Nicho</label>
+                <select>
+                    <option>Espaço e Cosmos</option>
+                    <option>Mistérios e Curiosidades</option>
+                    <option>História e Civilizações</option>
+                    <option>Tecnologia e Futuro</option>
+                    <option>Horror e Sobrenatural</option>
+                    <option>Crime e Investigação</option>
+                    <option>Natureza e Animais</option>
+                    <option>Finanças e Negócios</option>
+                    <option>Motivação e Autoajuda</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Idioma</label>
+                <select>
+                    <option>Português (Brasil)</option>
+                    <option>English (US)</option>
+                    <option>Español</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Frequência de Postagem</label>
+                <select>
+                    <option>1 vídeo por dia</option>
+                    <option>3 vídeos por semana</option>
+                    <option>1 vídeo por semana</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Descrição do Canal</label>
+                <textarea placeholder="Descreva o foco e estilo do canal..."></textarea>
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="btn btn-success" onclick="createChannel()">✅ Criar Canal</button>
+                <button class="btn btn-secondary" onclick="closeModal('newChannel')">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span class="toast-icon">✅</span>
+        <span class="toast-message" id="toastMessage">Ação realizada com sucesso!</span>
+    </div>
+
+    <script>
+        // ==========================================
+        //  NAVIGATION
+        // ==========================================
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            // Show target section
+            document.getElementById('section-' + sectionId).classList.add('active');
+            // Update nav items
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+        }
+
+        // ==========================================
+        //  MODALS
+        // ==========================================
+        function openModal(modalId) {
+            document.getElementById('modal-' + modalId).classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById('modal-' + modalId).classList.remove('active');
+        }
+
+        // Close modal on overlay click
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                }
+            });
+        });
+
+        // ==========================================
+        //  TOAST NOTIFICATIONS
+        // ==========================================
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // ==========================================
+        //  CREATE VIDEO
+        // ==========================================
+        function createVideo() {
+            closeModal('newVideo');
+            showToast('🚀 Vídeo enviado para produção via Make.com!');
+        }
+
+        // ==========================================
+        //  CREATE CHANNEL
+        // ==========================================
+        function createChannel() {
+            closeModal('newChannel');
+            showToast('✅ Canal criado com sucesso!');
+            renderChannels();
+        }
+
+        // ==========================================
+        //  TRENDING TOPICS
+        // ==========================================
+        const trendingData = {
+            cosmos: [
+                { title: "O que Acontece Dentro de um Buraco Negro?", niche: "Espaço", views: "2.3M", competition: "Média", heat: 92 },
+                { title: "A Lua Tem Água? Novas Descobertas da NASA", niche: "Espaço", views: "1.8M", competition: "Baixa", heat: 88 },
+                { title: "Planetas Onde Pode Existir Vida Alienígena", niche: "Espaço", views: "4.1M", competition: "Alta", heat: 95 },
+                { title: "O Fim do Universo: 5 Teorias Assustadoras", niche: "Espaço", views: "3.2M", competition: "Média", heat: 90 },
+                { title: "A Estrela Mais Misteriosa Já Descoberta", niche: "Espaço", views: "1.5M", competition: "Baixa", heat: 82 },
+                { title: "Viagem no Tempo é Possível? A Ciência Responde", niche: "Espaço", views: "5.7M", competition: "Alta", heat: 97 },
+            ],
+            mente: [
+                { title: "7 Truques Psicológicos que Controlam Sua Mente", niche: "Psicologia", views: "3.8M", competition: "Alta", heat: 94 },
+                { title: "O Efeito Mandela: Falsas Memórias ou Realidade Paralela?", niche: "Mistério", views: "2.1M", competition: "Média", heat: 86 },
+                { title: "Por Que Sonhamos? A Verdade que Ninguém Conta", niche: "Ciência", views: "1.9M", competition: "Baixa", heat: 80 },
+                { title: "Pessoas Tóxicas: 10 Sinais que Você Está Ignorando", niche: "Psicologia", views: "6.2M", competition: "Alta", heat: 98 },
+                { title: "O Poder do Silêncio: Por Que Pessoas Inteligentes Falam Menos", niche: "Autoconhecimento", views: "2.8M", competition: "Média", heat: 85 },
+                { title: "Déjà Vu: Seu Cérebro Está Pregando Peças em Você", niche: "Neurociência", views: "1.3M", competition: "Baixa", heat: 78 },
+            ],
+            historia: [
+                { title: "Civilizações Perdidas que a História Escondeu", niche: "Arqueologia", views: "2.5M", competition: "Média", heat: 89 },
+                { title: "Os Segredos Mais Sombrios da Família Real Britânica", niche: "História", views: "4.3M", competition: "Alta", heat: 93 },
+                { title: "Armas Secretas da Segunda Guerra Mundial", niche: "Militar", views: "3.1M", competition: "Média", heat: 87 },
+                { title: "A Verdadeira História por Trás dos Filmes de Hollywood", niche: "Cultura", views: "1.7M", competition: "Baixa", heat: 81 },
+                { title: "Impérios que Desapareceram sem Explicação", niche: "Arqueologia", views: "2.9M", competition: "Média", heat: 91 },
+                { title: "Mapas Antigos que Revelam Continentes Perdidos", niche: "Mistério", views: "3.6M", competition: "Baixa", heat: 94 },
+            ],
+            tech: [
+                { title: "IA que Substitui Profissões: Sua Está na Lista?", niche: "IA", views: "5.4M", competition: "Alta", heat: 99 },
+                { title: "O Metaverso em 2026: Promessa ou Realidade?", niche: "Tecnologia", views: "1.2M", competition: "Baixa", heat: 72 },
+                { title: "Computação Quântica: O Fim da Privacidade?", niche: "Tecnologia", views: "2.0M", competition: "Média", heat: 84 },
+                { title: "Robôs Humanoides: Eles Já Estão Entre Nós", niche: "Robótica", views: "3.7M", competition: "Média", heat: 92 },
+                { title: "Neuralink: Quando Chips no Cérebro Serão Normais?", niche: "Biotech", views: "2.8M", competition: "Baixa", heat: 88 },
+                { title: "A Internet em 2030: O Que Vai Mudar?", niche: "Futuro", views: "1.9M", competition: "Média", heat: 83 },
+            ],
+            all: []
+        };
+
+        function generateTrending() {
+            const channel = document.getElementById('trendingChannel').value;
+            const container = document.getElementById('trendingTopics');
+            
+            let topics = [];
+            if (channel === 'all') {
+                Object.values(trendingData).forEach(t => topics = topics.concat(t));
+                // Shuffle and take 12
+                topics = topics.sort(() => Math.random() - 0.5).slice(0, 12);
+            } else {
+                topics = trendingData[channel] || [];
+            }
+
+            container.innerHTML = topics.map((topic, i) => `
+                <div class="topic-card fade-in" style="animation-delay: ${i * 0.05}s; opacity: 0;">
+                    <div class="topic-niche">${topic.niche}</div>
+                    <div class="topic-title">${topic.title}</div>
+                    <div class="topic-stats">
+                        <div class="topic-stat">👁️ ${topic.views} views/mês</div>
+                        <div class="topic-stat">⚔️ ${topic.competition}</div>
+                    </div>
+                    <div class="topic-heat">
+                        <span style="font-size: 12px;">🔥 Heat Score:</span>
+                        <div class="heat-bar">
+                            <div class="heat-bar-fill ${topic.heat > 90 ? 'heat-high' : topic.heat > 80 ? 'heat-medium' : 'heat-low'}" style="width: ${topic.heat}%;"></div>
+                        </div>
+                        <span style="font-size: 12px; font-weight: 700; color: ${topic.heat > 90 ? 'var(--red)' : topic.heat > 80 ? 'var(--yellow)' : 'var(--green)'};">${topic.heat}</span>
+                    </div>
+                    <div class="topic-actions">
+                        <button class="btn btn-primary btn-small" onclick="selectTopic('${topic.title.replace(/'/g, "\\'")}')">🚀 Criar Vídeo</button>
+                        <button class="btn btn-secondary btn-small" onclick="showToast('💾 Tema salvo na lista!')">💾 Salvar</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function selectTopic(title) {
+            openModal('newVideo');
+            // Pre-fill the topic field
+            document.querySelector('#modal-newVideo input[type="text"]').value = title;
+        }
+
+        // ==========================================
+        //  CHANNELS DATA
+        // ==========================================
+        let channels = [
+            { name: "Cosmos Dark", icon: "🌌", niche: "Espaço e Cosmos", videos: 12, subs: "2.3K", views: "45K" },
+            { name: "Mente Obscura", icon: "🧠", niche: "Psicologia e Mistérios", videos: 8, subs: "1.1K", views: "22K" },
+            { name: "História Oculta", icon: "📜", niche: "História e Arqueologia", videos: 5, subs: "890", views: "15K" },
+        ];
+
+        function renderChannels() {
+            const container = document.getElementById('channelsList');
+            container.innerHTML = channels.map(ch => `
+                <div class="channel-card">
+                    <div class="channel-avatar">${ch.icon}</div>
+                    <h4>${ch.name}</h4>
+                    <div class="channel-niche">${ch.niche}</div>
+                    <div class="channel-stats-row">
+                        <div class="channel-stat-item">
+                            <div class="value">${ch.videos}</div>
+                            <div class="label">Vídeos</div>
+                        </div>
+                        <div class="channel-stat-item">
+                            <div class="value">${ch.subs}</div>
+                            <div class="label">Inscritos</div>
+                        </div>
+                        <div class="channel-stat-item">
+                            <div class="value">${ch.views}</div>
+                            <div class="label">Views</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('') + `
+                <div class="channel-card" style="border: 2px dashed var(--border); cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center;" onclick="openModal('newChannel')">
+                    <div style="font-size: 36px; margin-bottom: 12px; opacity: 0.5;">➕</div>
+                    <h4 style="color: var(--text-muted);">Adicionar Canal</h4>
+                </div>
+            `;
+        }
+
+        // ==========================================
+        //  ALL VIDEOS
+        // ==========================================
+        const allVideosData = [
+            { id: 15, title: "Criaturas das Profundezas do Oceano", channel: "Cosmos Dark", status: "pending", date: "27/07" },
+            { id: 14, title: "Segredos Obscuros da Antiga Roma", channel: "História Oculta", status: "scheduled", date: "25/07" },
+            { id: 13, title: "Os 5 Mistérios do Espaço que a NASA Não Explica", channel: "Cosmos Dark", status: "producing", date: "24/07" },
+            { id: 12, title: "Segredos do Oceano que Você Nunca Imaginou", channel: "Cosmos Dark", status: "published", date: "22/07" },
+            { id: 11, title: "10 Fatos Assustadores sobre a Mente Humana", channel: "Mente Obscura", status: "published", date: "20/07" },
+            { id: 10, title: "Civilizações Perdidas da América do Sul", channel: "História Oculta", status: "published", date: "18/07" },
+            { id: 9, title: "O Lado Sombrio da Inteligência Artificial", channel: "Mente Obscura", status: "published", date: "16/07" },
+            { id: 8, title: "Buracos Negros: Portais para Outros Universos?", channel: "Cosmos Dark", status: "published", date: "14/07" },
+        ];
+
+        function renderAllVideos() {
+            const container = document.getElementById('allVideos');
+            const statusLabels = {
+                published: { label: "✅ Publicado", class: "status-published" },
+                producing: { label: "🔄 Produzindo", class: "status-producing" },
+                scheduled: { label: "📅 Agendado", class: "status-scheduled" },
+                pending: { label: "⏳ Pendente", class: "status-pending" },
+            };
+
+            container.innerHTML = allVideosData.map(v => `
+                <div class="video-card">
+                    <div class="video-number">${v.id}</div>
+                    <div class="video-info">
+                        <div class="video-title">${v.title}</div>
+                        <div class="video-meta">Canal: ${v.channel} • ${v.date}</div>
+                    </div>
+                    <span class="video-status ${statusLabels[v.status].class}">${statusLabels[v.status].label}</span>
+                </div>
+            `).join('');
+        }
+
+        // ==========================================
+        //  CRONOGRAMA FILTER
+        // ==========================================
+        function filterCronograma() {
+            const filter = document.getElementById('cronogramaFilter').value;
+            document.querySelectorAll('#cronogramaList .pipeline-container').forEach(item => {
+                if (filter === 'all' || item.dataset.status === filter) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // ==========================================
+        //  INITIALIZE
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', function() {
+            generateTrending();
+            renderChannels();
+            renderAllVideos();
+        });
+    </script>
+</body>
+</html>
 
