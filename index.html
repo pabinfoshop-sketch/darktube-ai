@@ -33,10 +33,8 @@
             min-height: 100vh;
         }
         
-        /* LAYOUT */
         .app { display: flex; min-height: 100vh; }
         
-        /* SIDEBAR */
         .sidebar {
             width: 260px;
             background: var(--bg-secondary);
@@ -85,9 +83,7 @@
         
         .sidebar-nav { padding: 16px 12px; }
         
-        .nav-section {
-            margin-bottom: 24px;
-        }
+        .nav-section { margin-bottom: 24px; }
         
         .nav-section-title {
             font-size: 10px;
@@ -138,14 +134,12 @@
             background: rgba(255,255,255,0.2);
         }
         
-        /* MAIN CONTENT */
         .main {
             flex: 1;
             margin-left: 260px;
             padding: 0;
         }
         
-        /* TOP BAR */
         .topbar {
             position: sticky;
             top: 0;
@@ -267,13 +261,11 @@
             50% { opacity: 0.5; }
         }
         
-        /* CONTENT AREA */
         .content { padding: 32px; }
         
         .page { display: none; }
         .page.active { display: block; }
         
-        /* STATS GRID */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -310,18 +302,6 @@
             color: var(--text-muted);
         }
         
-        .stat-card .stat-change {
-            font-size: 11px;
-            margin-top: 8px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        
-        .stat-change.up { color: var(--green); }
-        .stat-change.down { color: var(--red); }
-        
-        /* CARDS */
         .card {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -345,7 +325,6 @@
             gap: 8px;
         }
         
-        /* GRID LAYOUTS */
         .grid-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -358,7 +337,6 @@
             gap: 16px;
         }
         
-        /* NEXT STEPS */
         .next-step {
             display: flex;
             align-items: center;
@@ -401,7 +379,6 @@
             color: var(--text-muted);
         }
         
-        /* VIDEO CARDS */
         .video-card {
             display: flex;
             align-items: center;
@@ -464,7 +441,6 @@
         .status-scheduled { background: rgba(59,130,246,0.15); color: var(--blue); }
         .status-pending { background: rgba(100,116,139,0.15); color: var(--text-muted); }
         
-        /* CHANNEL CARDS */
         .channel-card {
             background: var(--bg-secondary);
             border: 1px solid var(--border);
@@ -524,7 +500,6 @@
             color: var(--text-muted);
         }
         
-        /* TOPIC CARDS */
         .topic-card {
             background: var(--bg-secondary);
             border: 1px solid var(--border);
@@ -562,7 +537,6 @@
             justify-content: space-between;
         }
         
-        /* BALANCE */
         .balance-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -606,7 +580,6 @@
         
         .balance-row:last-child { border: none; }
         
-        /* PIPELINE */
         .pipeline-flow {
             display: flex;
             align-items: center;
@@ -659,7 +632,6 @@
             color: var(--text-muted);
         }
         
-        /* SCHEDULE */
         .schedule-item {
             display: flex;
             align-items: center;
@@ -697,14 +669,6 @@
             margin-top: 4px;
         }
         
-        .schedule-status {
-            font-size: 12px;
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-weight: 600;
-        }
-        
-        /* AUTOMATION */
         .scenario-card {
             background: var(--bg-secondary);
             border: 1px solid var(--border);
@@ -737,10 +701,7 @@
         .scenario-status.active { color: var(--green); }
         .scenario-status.inactive { color: var(--text-muted); }
         
-        /* SETTINGS */
-        .setting-group {
-            margin-bottom: 24px;
-        }
+        .setting-group { margin-bottom: 24px; }
         
         .setting-group h4 {
             font-size: 14px;
@@ -775,7 +736,6 @@
             width: 200px;
         }
         
-        /* TOGGLE SWITCH */
         .toggle {
             position: relative;
             width: 44px;
@@ -813,7 +773,6 @@
             transform: translateX(20px);
         }
         
-        /* MODAL */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -848,9 +807,7 @@
             gap: 8px;
         }
         
-        .form-group {
-            margin-bottom: 16px;
-        }
+        .form-group { margin-bottom: 16px; }
         
         .form-group label {
             display: block;
@@ -892,7 +849,6 @@
         
         .modal-actions .btn { flex: 1; justify-content: center; }
         
-        /* TOAST */
         .toast-container {
             position: fixed;
             top: 20px;
@@ -923,7 +879,6 @@
             to { transform: translateX(0); opacity: 1; }
         }
         
-        /* EMPTY STATE */
         .empty-state {
             text-align: center;
             padding: 40px;
@@ -941,11 +896,8 @@
             color: var(--text-secondary);
         }
         
-        .empty-state p {
-            font-size: 13px;
-        }
+        .empty-state p { font-size: 13px; }
         
-        /* PROJECTION TABLE */
         .projection-table {
             width: 100%;
             border-collapse: collapse;
@@ -970,7 +922,6 @@
             background: var(--bg-hover);
         }
         
-        /* LOADING */
         .loading-spinner {
             display: inline-block;
             width: 20px;
@@ -985,67 +936,28 @@
             to { transform: rotate(360deg); }
         }
         
-        /* RESPONSIVE */
         @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
-            }
-            
-            .sidebar.open {
-                transform: translateX(0);
-            }
-            
-            .main {
-                margin-left: 0;
-            }
-            
-            .menu-toggle {
-                display: block;
-            }
-            
-            .content {
-                padding: 16px;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .grid-2 {
-                grid-template-columns: 1fr;
-            }
-            
-            .grid-3 {
-                grid-template-columns: 1fr;
-            }
-            
-            .balance-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .topbar {
-                padding: 12px 16px;
-            }
-            
-            .topbar-right .connection-status span {
-                display: none;
-            }
-            
-            .pipeline-flow {
-                padding: 12px;
-            }
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .main { margin-left: 0; }
+            .menu-toggle { display: block; }
+            .content { padding: 16px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .grid-2 { grid-template-columns: 1fr; }
+            .grid-3 { grid-template-columns: 1fr; }
+            .balance-grid { grid-template-columns: 1fr; }
+            .topbar { padding: 12px 16px; }
+            .topbar-right .connection-status span { display: none; }
+            .pipeline-flow { padding: 12px; }
         }
         
         @media (max-width: 480px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
+            .stats-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
     <div class="app">
-        <!-- SIDEBAR -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-logo">
@@ -1060,16 +972,16 @@
             <nav class="sidebar-nav">
                 <div class="nav-section">
                     <div class="nav-section-title">Principal</div>
-                    <div class="nav-item active" onclick="showPage('dashboard')">
+                    <div class="nav-item active" onclick="showPage('dashboard', this)">
                         <span class="nav-icon">📊</span>
                         Dashboard
                     </div>
-                    <div class="nav-item" onclick="showPage('schedule')">
+                    <div class="nav-item" onclick="showPage('schedule', this)">
                         <span class="nav-icon">📅</span>
                         Cronograma
-                        <span class="nav-badge">3</span>
+                        <span class="nav-badge" id="badgeSchedule">3</span>
                     </div>
-                    <div class="nav-item" onclick="showPage('pipeline')">
+                    <div class="nav-item" onclick="showPage('pipeline', this)">
                         <span class="nav-icon">🔄</span>
                         Pipeline
                     </div>
@@ -1077,16 +989,16 @@
                 
                 <div class="nav-section">
                     <div class="nav-section-title">Conteúdo</div>
-                    <div class="nav-item" onclick="showPage('topics')">
+                    <div class="nav-item" onclick="showPage('topics', this)">
                         <span class="nav-icon">🔥</span>
                         Temas em Alta
-                        <span class="nav-badge">5</span>
+                        <span class="nav-badge" id="badgeTopics">5</span>
                     </div>
-                    <div class="nav-item" onclick="showPage('videos')">
+                    <div class="nav-item" onclick="showPage('videos', this)">
                         <span class="nav-icon">🎥</span>
                         Meus Vídeos
                     </div>
-                    <div class="nav-item" onclick="showPage('channels')">
+                    <div class="nav-item" onclick="showPage('channels', this)">
                         <span class="nav-icon">📺</span>
                         Meus Canais
                     </div>
@@ -1094,15 +1006,15 @@
                 
                 <div class="nav-section">
                     <div class="nav-section-title">Sistema</div>
-                    <div class="nav-item" onclick="showPage('balance')">
+                    <div class="nav-item" onclick="showPage('balance', this)">
                         <span class="nav-icon">💰</span>
                         Saldo APIs
                     </div>
-                    <div class="nav-item" onclick="showPage('automation')">
+                    <div class="nav-item" onclick="showPage('automation', this)">
                         <span class="nav-icon">⚡</span>
-                        Automação
+                        Automações
                     </div>
-                    <div class="nav-item" onclick="showPage('settings')">
+                    <div class="nav-item" onclick="showPage('settings', this)">
                         <span class="nav-icon">⚙️</span>
                         Configurações
                     </div>
@@ -1110,9 +1022,7 @@
             </nav>
         </aside>
         
-        <!-- MAIN CONTENT -->
         <main class="main">
-            <!-- TOP BAR -->
             <header class="topbar">
                 <div class="topbar-left">
                     <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
@@ -1132,35 +1042,30 @@
                 </div>
             </header>
             
-            <!-- CONTENT -->
             <div class="content">
                 
-                <!-- ===== DASHBOARD ===== -->
+                <!-- DASHBOARD -->
                 <div class="page active" id="page-dashboard">
-                    <div class="stats-grid" id="statsGrid">
+                    <div class="stats-grid">
                         <div class="stat-card">
                             <div class="stat-icon">🎬</div>
                             <div class="stat-value" id="statVideos">0</div>
                             <div class="stat-label">Vídeos Criados</div>
-                            <div class="stat-change up">↑ Carregando...</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon">📺</div>
                             <div class="stat-value" id="statChannels">0</div>
                             <div class="stat-label">Canais Ativos</div>
-                            <div class="stat-change up">↑ Conectado</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon">🔄</div>
                             <div class="stat-value" id="statProducing">0</div>
                             <div class="stat-label">Em Produção</div>
-                            <div class="stat-change">Pipeline ativo</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon">💰</div>
-                            <div class="stat-value" id="statBalance">$0</div>
-                            <div class="stat-label">Saldo Total</div>
-                            <div class="stat-change up">↑ Suficiente</div>
+                            <div class="stat-value" id="statBalance">$18</div>
+                            <div class="stat-label">Saldo Total APIs</div>
                         </div>
                     </div>
                     
@@ -1170,12 +1075,9 @@
                                 <h3>🎯 Próximos Passos</h3>
                             </div>
                             <div id="nextSteps">
-                                <div class="next-step">
-                                    <div class="step-icon narration">🎙️</div>
-                                    <div class="step-info">
-                                        <h4>Carregando dados...</h4>
-                                        <p>Aguardando conexão com Google Sheets</p>
-                                    </div>
+                                <div class="empty-state">
+                                    <div class="loading-spinner"></div>
+                                    <p>Carregando...</p>
                                 </div>
                             </div>
                         </div>
@@ -1187,41 +1089,39 @@
                             <div id="recentVideos">
                                 <div class="empty-state">
                                     <div class="loading-spinner"></div>
-                                    <p>Carregando vídeos...</p>
+                                    <p>Carregando...</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- ===== CRONOGRAMA ===== -->
+                <!-- CRONOGRAMA -->
                 <div class="page" id="page-schedule">
                     <div class="card">
                         <div class="card-header">
-                            <h3>📅 Cronograma Dinâmico</h3>
+                            <h3>📅 Cronograma de Produção</h3>
                             <button class="btn btn-primary btn-sm" onclick="openModal('newVideo')">➕ Agendar</button>
                         </div>
                         <div id="scheduleList">
                             <div class="empty-state">
                                 <div class="loading-spinner"></div>
-                                <p>Carregando cronograma...</p>
+                                <p>Carregando...</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- ===== PIPELINE ===== -->
+                <!-- PIPELINE -->
                 <div class="page" id="page-pipeline">
                     <div class="card">
                         <div class="card-header">
                             <h3>🔄 Pipeline de Produção</h3>
                         </div>
-                        <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">Fluxo completo de automação Make.com</p>
-                        
                         <div class="pipeline-flow">
                             <div class="pipeline-step">
                                 <div class="pipeline-icon done">📝</div>
-                                <div class="pipeline-label">Roteiro<br><small>Llama Free</small></div>
+                                <div class="pipeline-label">Roteiro<br><small>OpenRouter</small></div>
                             </div>
                             <div class="pipeline-arrow">→</div>
                             <div class="pipeline-step">
@@ -1231,38 +1131,33 @@
                             <div class="pipeline-arrow">→</div>
                             <div class="pipeline-step">
                                 <div class="pipeline-icon active">🎨</div>
-                                <div class="pipeline-label">Imagens<br><small>FLUX Schnell</small></div>
+                                <div class="pipeline-label">Imagens<br><small>FLUX</small></div>
                             </div>
                             <div class="pipeline-arrow">→</div>
                             <div class="pipeline-step">
                                 <div class="pipeline-icon">🎞️</div>
-                                <div class="pipeline-label">Edição<br><small>Creatomate</small></div>
-                            </div>
-                            <div class="pipeline-arrow">→</div>
-                            <div class="pipeline-step">
-                                <div class="pipeline-icon">🖼️</div>
-                                <div class="pipeline-label">Thumbnail<br><small>FLUX Dev</small></div>
+                                <div class="pipeline-label">Edição<br><small>FFmpeg</small></div>
                             </div>
                             <div class="pipeline-arrow">→</div>
                             <div class="pipeline-step">
                                 <div class="pipeline-icon">📤</div>
-                                <div class="pipeline-label">Publicar<br><small>YouTube API</small></div>
+                                <div class="pipeline-label">Upload<br><small>YouTube</small></div>
                             </div>
                         </div>
                     </div>
                     
                     <div class="card">
                         <div class="card-header">
-                            <h3>📊 Estatísticas do Pipeline</h3>
+                            <h3>📊 Estatísticas</h3>
                         </div>
                         <div class="stats-grid">
                             <div class="stat-card">
-                                <div class="stat-value" style="color:var(--green)">12</div>
-                                <div class="stat-label">Vídeos Publicados</div>
+                                <div class="stat-value" style="color:var(--green)" id="publishedCount">0</div>
+                                <div class="stat-label">Publicados</div>
                             </div>
                             <div class="stat-card">
-                                <div class="stat-value" style="color:var(--yellow)">3</div>
-                                <div class="stat-label">Em Produção</div>
+                                <div class="stat-value" style="color:var(--yellow)" id="producingCount">0</div>
+                                <div class="stat-label">Produzindo</div>
                             </div>
                             <div class="stat-card">
                                 <div class="stat-value" style="color:var(--blue)">~13min</div>
@@ -1276,7 +1171,7 @@
                     </div>
                 </div>
                 
-                <!-- ===== TEMAS EM ALTA ===== -->
+                <!-- TEMAS EM ALTA -->
                 <div class="page" id="page-topics">
                     <div class="card">
                         <div class="card-header">
@@ -1292,7 +1187,7 @@
                     </div>
                 </div>
                 
-                <!-- ===== MEUS VÍDEOS ===== -->
+                <!-- MEUS VÍDEOS -->
                 <div class="page" id="page-videos">
                     <div class="card">
                         <div class="card-header">
@@ -1302,13 +1197,13 @@
                         <div id="allVideos">
                             <div class="empty-state">
                                 <div class="loading-spinner"></div>
-                                <p>Carregando vídeos...</p>
+                                <p>Carregando...</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- ===== MEUS CANAIS ===== -->
+                <!-- MEUS CANAIS -->
                 <div class="page" id="page-channels">
                     <div class="card">
                         <div class="card-header">
@@ -1318,23 +1213,19 @@
                         <div class="grid-3" id="channelsGrid">
                             <div class="empty-state">
                                 <div class="loading-spinner"></div>
-                                <p>Carregando canais...</p>
+                                <p>Carregando...</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- ===== SALDO ===== -->
+                <!-- SALDO -->
                 <div class="page" id="page-balance">
                     <div class="balance-grid" id="balanceGrid">
                         <div class="balance-card">
                             <h4>🧠 OpenRouter</h4>
                             <div class="balance-amount" id="balanceOpenRouter">$8.00</div>
                             <div class="balance-details">
-                                <div class="balance-row">
-                                    <span style="color:var(--text-muted)">Crédito Total</span>
-                                    <span>$8.00</span>
-                                </div>
                                 <div class="balance-row">
                                     <span style="color:var(--text-muted)">Usado</span>
                                     <span style="color:var(--red)" id="usedOpenRouter">$0.00</span>
@@ -1349,10 +1240,6 @@
                             <h4>🎨 Replicate</h4>
                             <div class="balance-amount" id="balanceReplicate">$10.00</div>
                             <div class="balance-details">
-                                <div class="balance-row">
-                                    <span style="color:var(--text-muted)">Crédito Total</span>
-                                    <span>$10.00</span>
-                                </div>
                                 <div class="balance-row">
                                     <span style="color:var(--text-muted)">Usado</span>
                                     <span style="color:var(--red)" id="usedReplicate">$0.00</span>
@@ -1373,43 +1260,41 @@
                             <thead>
                                 <tr>
                                     <th>Cenário</th>
-                                    <th>OpenRouter</th>
-                                    <th>Replicate</th>
+                                    <th>Custo/Dia</th>
+                                    <th>Custo/Mês</th>
                                     <th>Duração</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>1 vídeo/dia (otimizado)</td>
-                                    <td>$0.003/dia</td>
-                                    <td>$0.036/dia</td>
-                                    <td style="color:var(--green); font-weight:700">~9 meses</td>
+                                    <td>1 vídeo/dia</td>
+                                    <td>$0.036</td>
+                                    <td>$1.08</td>
+                                    <td style="color:var(--green); font-weight:700">~6 meses</td>
                                 </tr>
                                 <tr>
                                     <td>2 vídeos/dia</td>
-                                    <td>$0.006/dia</td>
-                                    <td>$0.072/dia</td>
-                                    <td style="color:var(--yellow); font-weight:700">~4.5 meses</td>
+                                    <td>$0.072</td>
+                                    <td>$2.16</td>
+                                    <td style="color:var(--yellow); font-weight:700">~3 meses</td>
                                 </tr>
                                 <tr>
                                     <td>3 vídeos/dia</td>
-                                    <td>$0.009/dia</td>
-                                    <td>$0.108/dia</td>
-                                    <td style="color:var(--red); font-weight:700">~3 meses</td>
+                                    <td>$0.108</td>
+                                    <td>$3.24</td>
+                                    <td style="color:var(--red); font-weight:700">~2 meses</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
                 
-                <!-- ===== AUTOMAÇÃO ===== -->
+                <!-- AUTOMAÇÕES -->
                 <div class="page" id="page-automation">
                     <div class="card">
                         <div class="card-header">
-                            <h3>⚡ Automação Make.com</h3>
+                            <h3>⚡ Automações Make.com</h3>
                         </div>
-                        <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">Status dos seus cenários e webhooks</p>
-                        
                         <div class="scenario-card">
                             <div class="scenario-info">
                                 <h4>🎬 Produção Completa de Vídeo</h4>
@@ -1420,7 +1305,6 @@
                                 Ativo
                             </div>
                         </div>
-                        
                         <div class="scenario-card">
                             <div class="scenario-info">
                                 <h4>📊 Monitor de Saldo</h4>
@@ -1431,7 +1315,6 @@
                                 Ativo
                             </div>
                         </div>
-                        
                         <div class="scenario-card">
                             <div class="scenario-info">
                                 <h4>🔥 Busca Temas em Alta</h4>
@@ -1445,7 +1328,7 @@
                     </div>
                 </div>
                 
-                <!-- ===== CONFIGURAÇÕES ===== -->
+                <!-- CONFIGURAÇÕES -->
                 <div class="page" id="page-settings">
                     <div class="card">
                         <div class="card-header">
@@ -1457,26 +1340,23 @@
                             <div class="setting-item">
                                 <label>Google Sheets API</label>
                                 <div style="display:flex;align-items:center;gap:8px;">
-                                    <div class="status-dot" id="sheetsStatus"></div>
-                                    <span style="font-size:12px;color:var(--green)" id="sheetsStatusText">Conectado</span>
+                                    <div class="status-dot"></div>
+                                    <span style="font-size:12px;color:var(--green)">Conectado</span>
                                 </div>
                             </div>
                             <div class="setting-item">
-                                <label>Make.com Webhook</label>
-                                <div style="display:flex;align-items:center;gap:8px;">
-                                    <div class="status-dot" style="background:var(--yellow)"></div>
-                                    <span style="font-size:12px;color:var(--yellow)">Configurar</span>
-                                </div>
+                                <label>URL da API</label>
+                                <input type="text" value="https://script.google.com/macros/s/AKfycbyhiRkI4MSPO0_cOyEQGsXHkFq4hxn_NYOA0-nmQ-yPo0re9RGEvOH3bCpeZ9F76RT2/exec" readonly style="width:300px;font-size:11px;">
                             </div>
                         </div>
                         
                         <div class="setting-group">
                             <h4>🎬 Produção</h4>
                             <div class="setting-item">
-                                <label>Qualidade das Imagens</label>
+                                <label>Modelo de Roteiro</label>
                                 <select>
-                                    <option>FLUX Schnell (Rápido)</option>
-                                    <option>FLUX Dev (Qualidade)</option>
+                                    <option>Llama 3.3 (Grátis)</option>
+                                    <option>DeepSeek V3 ($0.003)</option>
                                 </select>
                             </div>
                             <div class="setting-item">
@@ -1486,31 +1366,6 @@
                                     <option>Multilingual v2 - Feminina</option>
                                 </select>
                             </div>
-                            <div class="setting-item">
-                                <label>Modelo de Roteiro</label>
-                                <select>
-                                    <option>Llama 3.3 (Grátis)</option>
-                                    <option>DeepSeek V3 ($0.003)</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="setting-group">
-                            <h4>🔔 Notificações</h4>
-                            <div class="setting-item">
-                                <label>Notificar quando vídeo publicar</label>
-                                <label class="toggle">
-                                    <input type="checkbox" checked>
-                                    <span class="toggle-slider"></span>
-                                </label>
-                            </div>
-                            <div class="setting-item">
-                                <label>Alerta de saldo baixo</label>
-                                <label class="toggle">
-                                    <input type="checkbox" checked>
-                                    <span class="toggle-slider"></span>
-                                </label>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -1519,9 +1374,7 @@
         </main>
     </div>
     
-    <!-- MODALS -->
-    
-    <!-- Modal Novo Vídeo -->
+    <!-- MODAL NOVO VÍDEO -->
     <div class="modal-overlay" id="modal-newVideo">
         <div class="modal">
             <h3>🎬 Novo Vídeo</h3>
@@ -1538,22 +1391,21 @@
             <div class="form-group">
                 <label>Nicho</label>
                 <select id="videoNiche">
-                    <option>Espaço e Cosmos</option>
+                    <option>Espaço</option>
                     <option>Psicologia</option>
                     <option>História</option>
                     <option>Tecnologia</option>
                     <option>Mistérios</option>
-                    <option>Curiosidades</option>
                 </select>
             </div>
             <div class="modal-actions">
                 <button class="btn btn-secondary" onclick="closeModal('newVideo')">Cancelar</button>
-                <button class="btn btn-success" onclick="createVideoReal()">🚀 Criar e Produzir</button>
+                <button class="btn btn-success" onclick="createVideo()">🚀 Criar Vídeo</button>
             </div>
         </div>
     </div>
     
-    <!-- Modal Novo Canal -->
+    <!-- MODAL NOVO CANAL -->
     <div class="modal-overlay" id="modal-newChannel">
         <div class="modal">
             <h3>📺 Novo Canal</h3>
@@ -1568,29 +1420,23 @@
                     <option>Psicologia e Mistérios</option>
                     <option>História e Arqueologia</option>
                     <option>Tecnologia e Futuro</option>
-                    <option>Curiosidades Gerais</option>
-                    <option>Horror e Sobrenatural</option>
                 </select>
             </div>
             <div class="modal-actions">
                 <button class="btn btn-secondary" onclick="closeModal('newChannel')">Cancelar</button>
-                <button class="btn btn-success" onclick="createChannelReal()">✅ Criar Canal</button>
+                <button class="btn btn-success" onclick="createChannel()">✅ Criar Canal</button>
             </div>
         </div>
     </div>
     
-    <!-- TOAST CONTAINER -->
     <div class="toast-container" id="toastContainer"></div>
 
     <script>
     // ==========================================
-    //  CONFIGURAÇÃO DA API GOOGLE SHEETS
+    // CONFIGURAÇÃO DA API
     // ==========================================
-    const API_URL = 'https://script.google.com/macros/s/AKfycbyF51ajCXUY2iH0u-Quk6A_lcTOy0wjzgagFIr_cfVDCnUBOVHZ0yRMxZU1mfz2tywsfg/exec';
+    const API_URL = 'https://script.google.com/macros/s/AKfycbyhiRkI4MSPO0_cOyEQGsXHkFq4hxn_NYOA0-nmQ-yPo0re9RGEvOH3bCpeZ9F76RT2/exec';
     
-    // ==========================================
-    //  DADOS LOCAIS (cache)
-    // ==========================================
     let appData = {
         videos: [],
         channels: [],
@@ -1600,14 +1446,14 @@
     };
     
     // ==========================================
-    //  NAVEGAÇÃO
+    // NAVEGAÇÃO
     // ==========================================
-    function showPage(page) {
+    function showPage(page, element) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
         
         document.getElementById('page-' + page).classList.add('active');
-        event.currentTarget.classList.add('active');
+        if (element) element.classList.add('active');
         
         const titles = {
             dashboard: ['Dashboard', 'Bem-vindo de volta! Aqui está o resumo dos seus canais.'],
@@ -1617,14 +1463,13 @@
             videos: ['Meus Vídeos', 'Todos os vídeos produzidos e em produção'],
             channels: ['Meus Canais', 'Gerencie seus canais dark'],
             balance: ['Saldo das APIs', 'Controle de uso e gastos das suas APIs'],
-            automation: ['Automação Make.com', 'Status dos seus cenários e webhooks'],
+            automation: ['Automação Make.com', 'Status dos seus cenários'],
             settings: ['Configurações', 'Configure suas APIs e preferências']
         };
         
         document.getElementById('pageTitle').textContent = titles[page][0];
         document.getElementById('pageSubtitle').textContent = titles[page][1];
         
-        // Fechar sidebar no mobile
         document.getElementById('sidebar').classList.remove('open');
     }
     
@@ -1633,13 +1478,11 @@
     }
     
     // ==========================================
-    //  MODAIS
+    // MODAIS
     // ==========================================
     function openModal(name) {
         document.getElementById('modal-' + name).classList.add('show');
-        if (name === 'newVideo') {
-            updateChannelSelect();
-        }
+        if (name === 'newVideo') updateChannelSelect();
     }
     
     function closeModal(name) {
@@ -1650,12 +1493,12 @@
         const select = document.getElementById('videoChannel');
         select.innerHTML = '<option value="">Selecione um canal...</option>';
         appData.channels.forEach(ch => {
-            select.innerHTML += `<option value="${ch.name}">${ch.icon} ${ch.name}</option>`;
+            select.innerHTML += `<option value="${ch.name}">${ch.icon || '📺'} ${ch.name}</option>`;
         });
     }
     
     // ==========================================
-    //  TOAST NOTIFICATIONS
+    // TOAST
     // ==========================================
     function showToast(message, type = 'info') {
         const container = document.getElementById('toastContainer');
@@ -1672,7 +1515,7 @@
     }
     
     // ==========================================
-    //  API GOOGLE SHEETS
+    // API CALLS
     // ==========================================
     async function callAPI(action, sheet, data = {}) {
         try {
@@ -1701,7 +1544,7 @@
     }
     
     // ==========================================
-    //  CARREGAR TODOS OS DADOS
+    // CARREGAR DADOS
     // ==========================================
     async function loadAllData() {
         const statusDot = document.getElementById('statusDot');
@@ -1711,91 +1554,71 @@
         statusText.textContent = 'Conectando...';
         
         try {
-            // Carregar vídeos
             const videosResult = await callAPI('get', 'videos');
             if (videosResult.success && videosResult.data) {
                 appData.videos = videosResult.data;
             }
             
-            // Carregar canais
             const channelsResult = await callAPI('get', 'channels');
             if (channelsResult.success && channelsResult.data) {
                 appData.channels = channelsResult.data;
             }
             
-            // Carregar topics
             const topicsResult = await callAPI('get', 'topics');
             if (topicsResult.success && topicsResult.data) {
                 appData.topics = topicsResult.data;
             }
             
-            // Carregar saldo
             const saldoResult = await callAPI('get', 'saldo');
             if (saldoResult.success && saldoResult.data) {
                 appData.saldo = saldoResult.data;
             }
             
-            // Sucesso!
             appData.connected = true;
             statusDot.className = 'status-dot';
-            statusText.textContent = 'Planilha conectada';
+            statusText.textContent = 'Conectado à planilha';
             
-            // Renderizar tudo
-            renderDashboard();
-            renderVideos();
-            renderChannels();
-            renderTopics();
-            renderSchedule();
-            renderBalance();
-            
+            renderAll();
             showToast('✅ Dados carregados da planilha!', 'success');
             
         } catch (error) {
             statusDot.className = 'status-dot offline';
             statusText.textContent = 'Desconectado';
             showToast('❌ Erro ao conectar: ' + error.message, 'error');
-            
-            // Usar dados locais como fallback
-            loadLocalData();
         }
     }
     
     // ==========================================
-    //  DADOS LOCAIS (FALLBACK)
+    // RENDERIZAR TUDO
     // ==========================================
-    function loadLocalData() {
-        appData.videos = [
-            { id: 1, title: 'Os 5 Mistérios do Espaço', channel: 'Cosmos Dark', niche: 'Espaço', status: 'published', date: '22/07/2026' },
-            { id: 2, title: 'Segredos da Mente Humana', channel: 'Mente Obscura', niche: 'Psicologia', status: 'producing', date: '23/07/2026' },
-            { id: 3, title: 'Civilizações Perdidas', channel: 'História Oculta', niche: 'História', status: 'pending', date: '24/07/2026' }
-        ];
-        
-        appData.channels = [
-            { id: 1, name: 'Cosmos Dark', icon: '🌌', niche: 'Espaço e Cosmos', videos_count: 12, subscribers: '2.3K', views: '45K' },
-            { id: 2, name: 'Mente Obscura', icon: '🧠', niche: 'Psicologia', videos_count: 8, subscribers: '1.1K', views: '22K' }
-        ];
-        
-        appData.topics = [
-            { id: 1, title: 'Viagem no Tempo é Possível?', niche: 'Espaço', views_potential: '5.7M', heat_score: 97 },
-            { id: 2, title: 'IA que Substitui Profissões', niche: 'Tecnologia', views_potential: '5.4M', heat_score: 99 },
-            { id: 3, title: 'Pessoas Tóxicas: 10 Sinais', niche: 'Psicologia', views_potential: '6.2M', heat_score: 98 }
-        ];
-        
+    function renderAll() {
         renderDashboard();
         renderVideos();
         renderChannels();
         renderTopics();
         renderSchedule();
+        renderBalance();
+        updateBadges();
     }
     
-    // ==========================================
-    //  RENDERIZAR DASHBOARD
-    // ==========================================
+    function updateBadges() {
+        const scheduleBadge = document.getElementById('badgeSchedule');
+        const topicsBadge = document.getElementById('badgeTopics');
+        
+        if (scheduleBadge) {
+            const activeCount = appData.videos.filter(v => v.status !== 'published').length;
+            scheduleBadge.textContent = activeCount;
+        }
+        
+        if (topicsBadge) {
+            topicsBadge.textContent = appData.topics.length;
+        }
+    }
+    
     function renderDashboard() {
-        // Stats
         document.getElementById('statVideos').textContent = appData.videos.length;
         document.getElementById('statChannels').textContent = appData.channels.length;
-        document.getElementById('statProducing').textContent = appData.videos.filter(v => v.status === 'producing').length;
+        document.getElementById('statProducing').textContent = appData.videos.filter(v => v.status === 'producing' || v.status === 'pending').length;
         
         let totalBalance = 0;
         appData.saldo.forEach(s => {
@@ -1806,19 +1629,19 @@
         
         // Próximos Passos
         const nextSteps = document.getElementById('nextSteps');
-        const producingVideos = appData.videos.filter(v => v.status === 'producing' || v.status === 'pending');
+        const activeVideos = appData.videos.filter(v => v.status === 'producing' || v.status === 'pending');
         
-        if (producingVideos.length > 0) {
-            nextSteps.innerHTML = producingVideos.map(v => {
+        if (activeVideos.length > 0) {
+            nextSteps.innerHTML = activeVideos.map(v => {
                 const icons = { producing: '🔄', pending: '📝' };
                 const classes = { producing: 'narration', pending: 'script' };
                 const labels = { producing: 'Em produção', pending: 'Aguardando início' };
                 return `
                     <div class="next-step">
-                        <div class="step-icon ${classes[v.status]}">${icons[v.status]}</div>
+                        <div class="step-icon ${classes[v.status] || 'script'}">${icons[v.status] || '📝'}</div>
                         <div class="step-info">
                             <h4>${v.title}</h4>
-                            <p>${labels[v.status]} • Canal: ${v.channel}</p>
+                            <p>${labels[v.status] || 'Pendente'} • ${v.channel}</p>
                         </div>
                     </div>
                 `;
@@ -1845,7 +1668,7 @@
                     <div class="video-number">${v.id}</div>
                     <div class="video-info">
                         <div class="video-title">${v.title}</div>
-                        <div class="video-meta">${v.channel} • ${v.date}</div>
+                        <div class="video-meta">${v.channel} • ${formatDate(v.date)}</div>
                     </div>
                     <span class="video-status status-${v.status}">${getStatusLabel(v.status)}</span>
                 </div>
@@ -1859,11 +1682,12 @@
                 </div>
             `;
         }
+        
+        // Pipeline stats
+        document.getElementById('publishedCount').textContent = appData.videos.filter(v => v.status === 'published').length;
+        document.getElementById('producingCount').textContent = appData.videos.filter(v => v.status === 'producing').length;
     }
     
-    // ==========================================
-    //  RENDERIZAR VÍDEOS
-    // ==========================================
     function renderVideos() {
         const container = document.getElementById('allVideos');
         
@@ -1883,16 +1707,13 @@
                 <div class="video-number">${v.id}</div>
                 <div class="video-info">
                     <div class="video-title">${v.title}</div>
-                    <div class="video-meta">Canal: ${v.channel} • ${v.niche || ''} • ${v.date}</div>
+                    <div class="video-meta">${v.channel} • ${v.niche || ''} • ${formatDate(v.date)}</div>
                 </div>
                 <span class="video-status status-${v.status}">${getStatusLabel(v.status)}</span>
             </div>
         `).join('');
     }
     
-    // ==========================================
-    //  RENDERIZAR CANAIS
-    // ==========================================
     function renderChannels() {
         const container = document.getElementById('channelsGrid');
         
@@ -1909,7 +1730,7 @@
         
         container.innerHTML = appData.channels.map(ch => `
             <div class="channel-card">
-                <div class="channel-icon">${ch.icon}</div>
+                <div class="channel-icon">${ch.icon || '📺'}</div>
                 <div class="channel-name">${ch.name}</div>
                 <div class="channel-niche">${ch.niche}</div>
                 <div class="channel-stats">
@@ -1930,9 +1751,6 @@
         `).join('');
     }
     
-    // ==========================================
-    //  RENDERIZAR TOPICS
-    // ==========================================
     function renderTopics() {
         const container = document.getElementById('topicsGrid');
         
@@ -1959,9 +1777,6 @@
         `).join('');
     }
     
-    // ==========================================
-    //  RENDERIZAR CRONOGRAMA
-    // ==========================================
     function renderSchedule() {
         const container = document.getElementById('scheduleList');
         const activeVideos = appData.videos.filter(v => v.status !== 'published');
@@ -1982,16 +1797,13 @@
                 <div class="schedule-number">${v.id}</div>
                 <div class="schedule-info">
                     <div class="schedule-title">${v.title}</div>
-                    <div class="schedule-meta">Canal: ${v.channel} • ${v.date}</div>
+                    <div class="schedule-meta">${v.channel} • ${formatDate(v.date)}</div>
                 </div>
-                <span class="schedule-status video-status status-${v.status}">${getStatusLabel(v.status)}</span>
+                <span class="video-status status-${v.status}">${getStatusLabel(v.status)}</span>
             </div>
         `).join('');
     }
     
-    // ==========================================
-    //  RENDERIZAR SALDO
-    // ==========================================
     function renderBalance() {
         appData.saldo.forEach(s => {
             if (s.api === 'OpenRouter') {
@@ -2007,15 +1819,15 @@
     }
     
     // ==========================================
-    //  CRIAR NOVO VÍDEO
+    // CRIAR VÍDEO
     // ==========================================
-    async function createVideoReal() {
+    async function createVideo() {
         const channel = document.getElementById('videoChannel').value;
         const title = document.getElementById('videoTitle').value;
         const niche = document.getElementById('videoNiche').value;
         
         if (!title) {
-            showToast('❌ Preencha o título do vídeo!', 'error');
+            showToast('❌ Preencha o título!', 'error');
             return;
         }
         
@@ -2030,13 +1842,13 @@
             channel: channel,
             niche: niche,
             status: 'pending',
-            date: new Date().toLocaleDateString('pt-BR'),
+            date: new Date().toISOString().split('T')[0],
             roteiro: '',
             narracao_url: '',
             imagens_urls: '',
             video_url: '',
             youtube_url: '',
-            custo: '0.036'
+            custo: 0.036
         };
         
         showToast('⏳ Salvando na planilha...', 'info');
@@ -2047,7 +1859,6 @@
             closeModal('newVideo');
             document.getElementById('videoTitle').value = '';
             showToast('🚀 Vídeo salvo! Make.com vai iniciar a produção...', 'success');
-            
             setTimeout(loadAllData, 2000);
         } else {
             showToast('❌ Erro ao salvar: ' + (result.error || 'Desconhecido'), 'error');
@@ -2055,14 +1866,14 @@
     }
     
     // ==========================================
-    //  CRIAR NOVO CANAL
+    // CRIAR CANAL
     // ==========================================
-    async function createChannelReal() {
+    async function createChannel() {
         const name = document.getElementById('channelName').value;
         const niche = document.getElementById('channelNiche').value;
         
         if (!name) {
-            showToast('❌ Preencha o nome do canal!', 'error');
+            showToast('❌ Preencha o nome!', 'error');
             return;
         }
         
@@ -2076,7 +1887,7 @@
             videos_count: 0,
             subscribers: 0,
             views: 0,
-            created_at: new Date().toLocaleDateString('pt-BR')
+            created_at: new Date().toISOString().split('T')[0]
         };
         
         showToast('⏳ Criando canal...', 'info');
@@ -2086,36 +1897,15 @@
         if (result.success) {
             closeModal('newChannel');
             document.getElementById('channelName').value = '';
-            showToast('✅ Canal criado com sucesso!', 'success');
-            
+            showToast('✅ Canal criado!', 'success');
             setTimeout(loadAllData, 2000);
         } else {
-            showToast('❌ Erro ao criar: ' + (result.error || 'Desconhecido'), 'error');
+            showToast('❌ Erro: ' + (result.error || 'Desconhecido'), 'error');
         }
     }
     
     // ==========================================
-    //  USAR TEMA
-    // ==========================================
-    function useTopic(title, niche) {
-        openModal('newVideo');
-        setTimeout(() => {
-            document.getElementById('videoTitle').value = title;
-        }, 100);
-    }
-    
-    // ==========================================
-    //  ATUALIZAR TEMAS
-    // ==========================================
-    async function refreshTopics() {
-        showToast('🔄 Buscando temas em alta...', 'info');
-        setTimeout(() => {
-            showToast('✅ Temas atualizados!', 'success');
-        }, 2000);
-    }
-    
-    // ==========================================
-    //  HELPERS
+    // HELPERS
     // ==========================================
     function getStatusLabel(status) {
         const labels = {
@@ -2127,26 +1917,43 @@
         return labels[status] || '⏳ Pendente';
     }
     
+    function formatDate(dateStr) {
+        if (!dateStr) return '';
+        try {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('pt-BR');
+        } catch {
+            return dateStr;
+        }
+    }
+    
+    function useTopic(title, niche) {
+        openModal('newVideo');
+        setTimeout(() => {
+            document.getElementById('videoTitle').value = title;
+        }, 100);
+    }
+    
+    function refreshTopics() {
+        showToast('🔄 Buscando temas em alta...', 'info');
+        setTimeout(() => {
+            showToast('✅ Temas atualizados!', 'success');
+        }, 2000);
+    }
+    
     // ==========================================
-    //  INICIALIZAR
+    // INICIALIZAR
     // ==========================================
     window.addEventListener('load', () => {
         loadAllData();
-        
-        // Auto-refresh a cada 30 segundos
         setInterval(() => {
-            if (appData.connected) {
-                loadAllData();
-            }
+            if (appData.connected) loadAllData();
         }, 30000);
     });
     
-    // Fechar modal clicando fora
     document.querySelectorAll('.modal-overlay').forEach(overlay => {
         overlay.addEventListener('click', (e) => {
-            if (e.target === overlay) {
-                overlay.classList.remove('show');
-            }
+            if (e.target === overlay) overlay.classList.remove('show');
         });
     });
     </script>
